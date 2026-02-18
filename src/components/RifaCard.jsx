@@ -1,0 +1,86 @@
+// components/RifaCard.js
+import Link from "next/link";
+
+export default function RifaCard({ rifa }) {
+  const progreso = (rifa.boletos_vendidos / rifa.total_boletos) * 100;
+  const porcentaje = Math.round(
+    (rifa.boletos_vendidos / rifa.total_boletos) * 100,
+  );
+  const colorClase =
+    porcentaje > 90
+      ? "text-orange-500"
+      : "text-emerald-600 dark:text-emerald-400";
+
+  // Luego en el JSX:
+  <span className={colorClase}>{porcentaje}%</span>;
+
+  return (
+    <div className="group border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-white dark:bg-zinc-900 flex flex-col">
+      {/* Contenedor de Imagen con Efecto Hover */}
+      <div className="relative h-56 overflow-hidden">
+        <img
+          src={rifa.imagen_url || "/placeholder-rifa.jpg"}
+          alt={rifa.nombre}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute top-3 right-3 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold shadow-sm border border-zinc-200 dark:border-zinc-700">
+          <span className={colorClase}>{porcentaje}%</span>
+          <span className="text-zinc-500 dark:text-zinc-400 ml-1">Vendido</span>
+        </div>
+      </div>
+
+      <div className="p-5 flex flex-col grow">
+        <h2 className="text-xl font-extrabold text-zinc-900 dark:text-white mb-2 uppercase tracking-wide">
+          {rifa.nombre}
+        </h2>
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-6 line-clamp-2 leading-relaxed">
+          {rifa.descripcion}
+        </p>
+
+        {/* Sección de Progreso mejorada [cite: 9] */}
+        <div className="mt-auto">
+          <div className="flex justify-between text-xs font-bold mb-2 uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+            <span>Progreso de venta</span>
+            <span>{Math.round(progreso)}%</span>
+          </div>
+          <div className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-full h-2.5 mb-6">
+            <div
+              className="bg-emerald-500 h-2.5 rounded-full shadow-[0_0_10px_rgba(16,185,129,0.3)] transition-all duration-1000"
+              style={{ width: `${progreso}%` }}
+            ></div>
+          </div>
+
+          {/* Precio y Botones */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mt-auto">
+            {/* Contenedor del Precio */}
+            <div className="flex flex-col">
+              <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+                Costo
+              </span>
+              <span className="text-2xl sm:text-xl font-black text-emerald-600 dark:text-emerald-400">
+                ${rifa.precio_boleto}{" "}
+                <span className="text-sm font-normal text-zinc-500">MXN</span>
+              </span>
+            </div>
+
+            {/* Contenedor de Botones - Toma ancho completo en móvil */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <Link
+                href={`/rifa/${rifa.id}`}
+                className="flex-1 text-center bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 py-4 sm:px-4 sm:py-2 rounded-xl font-bold text-sm hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all shadow-lg active:scale-95 duration-200"
+              >
+                Comprar
+              </Link>
+              <Link
+                href={`/verificar`}
+                className="flex-1 text-center bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white py-4 sm:px-4 sm:py-2 rounded-xl font-bold text-sm hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all active:scale-95 duration-200 border border-zinc-200 dark:border-zinc-700"
+              >
+                Verificar
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

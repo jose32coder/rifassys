@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Para que tu archivo README.md refleje correctamente el sistema de rifas que estamos construyendo según la Propuesta Técnica, he ajustado el contenido para que incluya el stack tecnológico, las instrucciones de configuración y la estructura del proyecto.
 
-## Getting Started
+Copia y pega este contenido en tu archivo README.md:
 
-First, run the development server:
+🎟️ Plataforma de Rifas MX — Sistema de Sorteos
+Este es un sistema moderno para la gestión y venta de boletos de rifas en línea, optimizado para el mercado mexicano con pagos vía transferencia y notificaciones por WhatsApp.
 
-```bash
+🚀 Stack Tecnológico
+Basado en la arquitectura definida en la propuesta técnica:
++1
+
+Frontend/Backend: Next.js 14 (App Router, JavaScript).
++1
+
+Base de Datos: Supabase (PostgreSQL + Realtime).
++2
+
+Imágenes: Cloudinary (CDN para fotos de premios y comprobantes).
++1
+
+Estilos: Tailwind CSS (Responsive & Dark Mode).
++1
+
+Notificaciones: WhatsApp Business Link (wa.me).
++1
+
+⚙️ Configuración del Entorno
+
+Variables de Entorno: Crea un archivo .env.local en la raíz del proyecto y añade tus credenciales:
++1
+
+Fragmento de código
+
+# Supabase
+
+NEXT_PUBLIC_SUPABASE_URL=tu-url-de-supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-anon-key
+SUPABASE_SERVICE_ROLE_KEY=tu-service-role-key
+
+# Cloudinary
+
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=tu-cloud-name
+CLOUDINARY_API_KEY=tu-api-key
+CLOUDINARY_API_SECRET=tu-api-secret
+Instalación:
+
+Bash
+npm install
+Ejecución en Desarrollo:
+
+Bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+📂 Estructura del Proyecto
+El proyecto sigue el plan de implementación por fases:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+/app: Rutas del sitio (Catálogo, Compra, Verificador y Admin).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+/components: Componentes reutilizables como RifaCard y formularios.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+/lib: Clientes de Supabase, Cloudinary y lógica de WhatsApp.
 
-## Learn More
+/api: Endpoints para asignación aleatoria de números y verificación.
 
-To learn more about Next.js, take a look at the following resources:
+🛠️ Flujo de Operación
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Administración: El administrador crea una rifa desde el panel.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Compra: El sistema asigna un número aleatorio (1-9999) y genera un folio único.
++2
 
-## Deploy on Vercel
+Pago: El comprador sube su comprobante y notifica al vendedor por WhatsApp automáticamente.
++1
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Validación: El administrador confirma el pago en el panel para que el boleto sea válido públicamente.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🌐 Despliegue
+El proyecto está listo para ser desplegado en Vercel siguiendo la integración continua desde GitHub.
