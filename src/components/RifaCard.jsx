@@ -66,13 +66,17 @@ export default function RifaCard({ rifa }) {
             {/* Contenedor de Botones - Toma ancho completo en móvil */}
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               <Link
-                href={`/rifa/${rifa.id}`}
+                href={`/rifa/${rifa.id}/comprar`}
                 className="flex-1 text-center bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 py-4 sm:px-4 sm:py-2 rounded-xl font-bold text-sm hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all shadow-lg active:scale-95 duration-200"
               >
                 Comprar
               </Link>
               <Link
-                href={`/verificar`}
+                href={{
+                  pathname: "/verificar",
+                  query: { rifaId: rifa.id }, // Esto aun se ve, pero...
+                }}
+                as="/verificar" // Esto es el "truco": oculta el query en la barra de direcciones
                 className="flex-1 text-center bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white py-4 sm:px-4 sm:py-2 rounded-xl font-bold text-sm hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all active:scale-95 duration-200 border border-zinc-200 dark:border-zinc-700"
               >
                 Verificar
