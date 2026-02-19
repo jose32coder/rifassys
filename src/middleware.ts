@@ -1,3 +1,6 @@
+console.log("URL:", process.env.NEXT_PUBLIC_SUPABASE_URL)
+console.log("KEY:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+
 // middleware.ts
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
@@ -45,10 +48,10 @@ export async function middleware(request: NextRequest) {
 
     // PROTECCIÓN DE RUTAS: 
     // Si la ruta comienza con /admin y no hay usuario, redirigir a login
-    if (request.nextUrl.pathname.startsWith('/admin') && !user) {
+    if (request.nextUrl.pathname.startsWith('/admin/rifas') && !user) {
         // Evitamos el bucle infinito si ya está en la página de login
-        if (request.nextUrl.pathname !== '/admin') {
-        return NextResponse.redirect(new URL('/admin', request.url))
+        if (request.nextUrl.pathname !== '/admin/rifas') {
+        return NextResponse.redirect(new URL('/admin/rifas', request.url))
         }
     }
 
