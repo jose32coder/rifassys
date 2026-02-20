@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { createClient } from "@/lib/supabase-client";
 import { useSearchParams } from "next/navigation";
 
-export default function VerificarPage() {
+function VerificarPageContent() {
   const searchParams = useSearchParams();
   const initialRifaId = searchParams.get("rifaId") || "";
 
@@ -138,5 +138,21 @@ export default function VerificarPage() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function VerificarPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+          <div className="text-emerald-500 font-black animate-pulse uppercase tracking-widest text-xs">
+            Cargando verificador...
+          </div>
+        </div>
+      }
+    >
+      <VerificarPageContent />
+    </Suspense>
   );
 }
