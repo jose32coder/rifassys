@@ -158,18 +158,31 @@ export default function ComprarRifaPage(props) {
       .eq("id", boletoId);
 
     if (!error) {
+      // CAMBIO: Ahora enviamos la cantidad de tickets, no la lista de números
       const mensaje = `Acabo de registrar mi pago para la rifa *${rifa.nombre}*.
 *Folio:* ${datosCompra.folio}
 *Nombre:* ${datosCompra.nombre}
-*Números:* ${datosCompra.numeros.join(", ")}
+*Cantidad:* ${cantidad} boletos 🎟️
 *Total:* $${datosCompra.total} MXN
-*Referencia/Folio:* ${referencia}
+*Referencia:* ${referencia}
 
 Adjunto foto de mi comprobante (Ticket o Pantallazo) abajo:`;
 
       const urlWa = `https://wa.me/527201769502?text=${encodeURIComponent(mensaje)}`;
-      window.open(urlWa, "_blank");
-      setPaso(3);
+
+      // Alerta final antes de saltar a WhatsApp
+      MySwal.fire({
+        title: "¡Casi listo!",
+        text: "Ahora se abrirá WhatsApp. NO OLVIDES adjuntar la FOTO de tu comprobante en el chat.",
+        icon: "info",
+        confirmButtonText: "Entendido, ir a WhatsApp",
+        confirmButtonColor: "#10b981",
+        background: "#09090b",
+        color: "#ffffff",
+      }).then(() => {
+        window.open(urlWa, "_blank");
+        setPaso(3);
+      });
     } else {
       alert("Error al guardar. Intenta de nuevo.");
     }
@@ -273,12 +286,12 @@ Adjunto foto de mi comprobante (Ticket o Pantallazo) abajo:`;
                     {procesando
                       ? "Procesando..."
                       : esMontoInsuficiente
-                        ? `Faltan $${500 - totalActual} para el mínimo`
+                        ? `Faltan $${300 - totalActual} para el mínimo`
                         : "Apartar mis Boletos"}
                   </button>
                   {esMontoInsuficiente && (
                     <p className="text-[10px] text-center text-red-500 font-bold uppercase tracking-tighter">
-                      La compra mínima es de $500 MXN
+                      La compra mínima es de $300 MXN
                     </p>
                   )}
                 </form>
@@ -291,6 +304,14 @@ Adjunto foto de mi comprobante (Ticket o Pantallazo) abajo:`;
                 <h2 className="text-2xl font-black text-center mb-4 text-zinc-900 dark:text-white uppercase">
                   Paso 2: Registro de Pago
                 </h2>
+
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-2xl">
+                  <p className="text-red-500 text-xs font-bold uppercase text-center leading-tight">
+                    ⚠️ Importante: No se aceptan transferencias de Mercado Pago.
+                    <br />
+                    Por favor utiliza BBVA u otro banco.
+                  </p>
+                </div>
 
                 {/* Selector de Método de Pago */}
                 <div className="flex gap-2 mb-6">
