@@ -16,6 +16,7 @@ export default function RifaForm({ initialData = null }) {
     descripcion: initialData?.descripcion || "",
     precio_boleto: initialData?.precio_boleto || "",
     total_boletos: initialData?.total_boletos || 1000,
+    boletos_vendidos: initialData?.boletos_vendidos || 0,
     imagen_url: initialData?.imagen_url || "",
     estado: initialData?.estado || "activa",
   });
@@ -57,6 +58,7 @@ export default function RifaForm({ initialData = null }) {
       ...formData,
       precio_boleto: parseFloat(formData.precio_boleto),
       total_boletos: parseInt(formData.total_boletos),
+      boletos_vendidos: parseInt(formData.boletos_vendidos) || 0,
     };
 
     let result;
@@ -124,8 +126,6 @@ export default function RifaForm({ initialData = null }) {
         </div>
       </div>
 
-      {/* ... Resto de tus campos (Descripción, Precio, etc) igual que antes ... */}
-
       <div className="space-y-2">
         <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">
           Descripción
@@ -140,7 +140,7 @@ export default function RifaForm({ initialData = null }) {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="space-y-2">
           <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">
             Precio por Boleto (MXN)
@@ -173,6 +173,20 @@ export default function RifaForm({ initialData = null }) {
             required
             className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-emerald-500 transition-all"
             placeholder="1000"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">
+            Vendidos (Simulado/Manual)
+          </label>
+          <input
+            type="number"
+            name="boletos_vendidos"
+            value={formData.boletos_vendidos}
+            onChange={handleChange}
+            className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-emerald-500 transition-all"
+            placeholder="0"
           />
         </div>
 

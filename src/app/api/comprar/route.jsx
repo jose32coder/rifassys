@@ -38,24 +38,33 @@ export async function POST(request) {
         )
       : [];
 
-    // 2. Lógica de disponibilidad
+    // 2. Lógica de disponibilidad OPTIMIZADA
     const limiteRifa = rifa.total_boletos || 1000;
-    const disponibles = Array.from(
-      { length: limiteRifa },
-      (_, i) => i + 1,
-    ).filter((n) => !numerosUsados.includes(n));
+    const usadosSet = new Set(numerosUsados); // Un Set es 1000x más rápido para buscar
+    const seleccionados = [];
 
-    if (disponibles.length < totalBoletos) {
+    // Intentamos buscar números al azar de forma eficiente
+    while (seleccionados.length < totalBoletos) {
+      const numAleatorio = Math.floor(Math.random() * limiteRifa) + 1;
+
+      // Si el número no está en usados y no ha sido seleccionado en este ciclo
+      if (
+        !usadosSet.has(numAleatorio) &&
+        !seleccionados.includes(numAleatorio)
+      ) {
+        seleccionados.push(numAleatorio);
+      }
+
+      // Salvaguarda: si por alguna razón no hay suficientes (muy raro por el check anterior)
+      if (usadosSet.size + seleccionados.length >= limiteRifa) break;
+    }
+
+    if (seleccionados.length < totalBoletos) {
       return NextResponse.json(
         { error: "No hay suficientes boletos disponibles" },
         { status: 400 },
       );
     }
-
-    // Seleccionamos la cantidad solicitada
-    const seleccionados = disponibles
-      .sort(() => 0.5 - Math.random())
-      .slice(0, totalBoletos);
 
     const folio = `RIFA-2026-${Math.random().toString(36).toUpperCase().substring(2, 6)}`;
 

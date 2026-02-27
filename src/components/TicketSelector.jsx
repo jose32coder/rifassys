@@ -5,7 +5,7 @@ export default function TicketSelector({
   setCantidad,
   precioUnitario,
 }) {
-  const opciones = [5, 10, 25, 50, 100, 200];
+  const opciones = [0, 130, 200, 250, 500, 1000];
   const total = cantidad * precioUnitario;
 
   return (
