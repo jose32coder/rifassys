@@ -1,3 +1,4 @@
+import { Clover } from "lucide-react";
 import Link from "next/link";
 
 export default function PublicLayout({ children }) {
@@ -8,9 +9,14 @@ export default function PublicLayout({ children }) {
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link
             href="/"
-            className="text-xl font-black text-zinc-900 dark:text-white tracking-tighter"
+            className="text-xl flex gap-1 items-center font-black text-zinc-900 dark:text-white tracking-tighter"
           >
-            🎟️ TREBOL<span className="text-emerald-500">SONORENSE</span>
+            <Clover
+              className="text-emerald-500 fill-emerald-500/20"
+              size={24}
+              strokeWidth={3}
+            />
+            TREBOL<span className="text-emerald-500">SONORENSE</span>
           </Link>
 
           <div className="flex items-center gap-6">

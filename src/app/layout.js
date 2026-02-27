@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Rifas Pro | Sorteos y Premios de Lujo",
+  title: "Trebol Sonorense | Prueba tu suerte y Gana",
   description:
     "Participa en los mejores sorteos, gestiona tus boletos y gana increíbles premios con nuestra plataforma segura y transparente.",
   icons: {

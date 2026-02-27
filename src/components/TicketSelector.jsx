@@ -1,12 +1,27 @@
 "use client";
 
+import { supabase } from "@/lib/supabase";
+import { useEffect, useState } from "react";
+
 export default function TicketSelector({
   cantidad,
   setCantidad,
   precioUnitario,
 }) {
-  const opciones = [0, 130, 200, 250, 500, 1000];
+  const [opciones, setOpciones] = useState([0]); // Fallback por si falla
   const total = cantidad * precioUnitario;
+
+  useEffect(() => {
+    async function loadOptions() {
+      const { data } = await supabase
+        .from("configuracion")
+        .select("valor")
+        .eq("clave", "opciones_tickets")
+        .single();
+      if (data) setOpciones(data.valor);
+    }
+    loadOptions();
+  }, []);
 
   return (
     <section className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-3xl">

@@ -35,8 +35,12 @@ export default function ComprarRifaPage(props) {
   const [metodoSeleccionado, setMetodoSeleccionado] = useState("transferencia");
 
   // Cálculos de validación
-  const totalActual = rifa ? cantidad * rifa.precio_boleto : 0;
-  const esMontoInsuficiente = totalActual < 500;
+  // Redondeamos el total a 2 decimales para evitar errores de punto flotante
+  const totalActual = rifa
+    ? Number((cantidad * rifa.precio_boleto).toFixed(2))
+    : 0;
+  const MONTO_MINIMO = 300; // Asegúrate de que coincida con lo que muestras abajo
+  const esMontoInsuficiente = totalActual < MONTO_MINIMO;
 
   useEffect(() => {
     async function fetchRifa() {
@@ -227,7 +231,7 @@ Adjunto foto de mi comprobante (Ticket o Pantallazo) abajo:`;
                 {rifa.nombre}
               </h1>
               <p className="text-emerald-600 dark:text-emerald-400 font-bold text-xl mt-2">
-                ${rifa.precio_boleto}{" "}
+                ${rifa.precio_boleto.toFixed(2)}{" "}
                 <span className="text-sm font-normal text-zinc-500 uppercase">
                   MXN por ticket
                 </span>
@@ -286,12 +290,12 @@ Adjunto foto de mi comprobante (Ticket o Pantallazo) abajo:`;
                     {procesando
                       ? "Procesando..."
                       : esMontoInsuficiente
-                        ? `Faltan $${300 - totalActual} para el mínimo`
+                        ? `Faltan $${(300 - totalActual).toFixed(2)} para el mínimo`
                         : "Apartar mis Boletos"}
                   </button>
                   {esMontoInsuficiente && (
                     <p className="text-[10px] text-center text-red-500 font-bold uppercase tracking-tighter">
-                      La compra mínima es de $300 MXN
+                      La compra mínima es de ${MONTO_MINIMO} MXN
                     </p>
                   )}
                 </form>
